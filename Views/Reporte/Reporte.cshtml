@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Reporte";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h3 class="font-weight-bold my-5 text-center">REPORTE</h3>
+
+<div class="container">
+    <div class="card mt-5 shadow">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-2">
+
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="Check-in"><h6 class="text-muted ">Desde:</h5></label>
+                    <span class="input-group-text bg-light shadow-sm" id="basico">
+                        <ion-icon name="calendar-clear-outline" class="pr-2"></ion-icon>
+                        <input type="text" readonly="" class="form-control bg-secondary" id="checkin" placeholder="Fecha inicial" name="FI">
+                    </span>
+                </div>
+
+                <div class="col-md-2">
+
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="Check-out">Hasta:</label>
+                    <span class="input-group-text bg-light shadow-sm" id="basico">
+                        <ion-icon name="calendar-clear-outline" class="pr-2"></ion-icon>
+                        <input type="text" readonly="" class="form-control bg-secondary" id="checkout" placeholder="Fecha final" name="FF">
+                    </span>
+                </div>
+
+                <div class="col-md-2">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+
+                </div>
+                <div class="col-md-7">
+                    <a type="buttom" class="btn btn-success" href="#">Generar PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>	

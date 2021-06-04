@@ -1,0 +1,117 @@
+﻿@model La_Moderna_Proyect.Models.InventarioModel
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    ViewBag.Title = "Alo";
+}
+<div class="my-5">
+    <h3 class="font-weight-bold text-center">INVENTARIO</h3>
+</div>
+
+<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#testItem" data-whatever="">
+    <ion-icon name="trash-outline"></ion-icon>
+</button>
+
+<div class="container">
+    <table class="table" id="tablaItems">
+        <thead class="thead-dark table-responsive-md">
+            <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="deleteItem" tabindex="-1" aria-labelledby="deleteItemLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteItemLabel">¿Seguro que quiere borrar este objeto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body align-content-center">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9">
+                                    <a type="buttom" class="btn btn-primary" href="#">Si</a>
+                                    <a type="buttom" class="btn btn-danger" href="#">No</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="testItem" tabindex="-1" aria-labelledby="testItemLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="testItemLabel">¿Seguro que quiere borrar este objeto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body align-content-center">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9" id="testSend">
+                                    <a type="buttom" class="btn btn-danger" href="~/Inventario/Inventario">SI</a>
+                                    <a type="buttom" class="btn btn-danger" href="#">No</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        $('#tablaItems').DataTable(
+            {
+                "processing": true,
+                "serverSide": true,
+                "ajax":
+                {
+                    "url": "/Inventario/Test",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "pageLength": 10,
+                "filter": true,
+                "responsivePriority": 1,
+                "data": null,
+                "columns":
+                    [
+                        { "data": "Producto", "name": "Producto", "autoWidth": true },
+                        { "data": "Marca", "name": "Marca", "autoWidth": true },
+                        { "data": "Total", "name": "Total", "autoWidth": true },
+                    ]
+            }); 
+     });
+
+</script>
+}
