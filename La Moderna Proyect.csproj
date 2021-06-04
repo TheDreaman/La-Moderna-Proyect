@@ -243,7 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CajaController.cs" />
+    <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\ReporteController.cs" />
@@ -251,6 +251,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\InventarioModel.cs" />
+    <Compile Include="Models\VentasModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,7 +261,7 @@
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\Inventario\Inventario.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Views\Caja\Caja.cshtml" />
+    <Content Include="Views\Ventas\Ventas.cshtml" />
     <Content Include="Views\Reporte\Reporte.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <None Include="Web.Debug.config">

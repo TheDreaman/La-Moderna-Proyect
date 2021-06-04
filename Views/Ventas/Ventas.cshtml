@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Ventas";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+<h3 class="font-weight-bold my-5 text-center">VENTAS</h3>
+
+<div class="container">
+    <table class="table" id="tablaVentas">
+        <thead class="thead-dark table-responsive-md">
+            <tr>
+                <th scope="col">ID de Venta</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Precio de Venta</th>
+                <th scope="col">Precio de Entrada</th>
+                <th scope="col">Ganancia</th>
+                <th scope="col">Cliente</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="deleteItCaja" tabindex="-1" aria-labelledby="deleteItemLabel2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteItemLabel2">¿Seguro que quiere borrar este objeto?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"></div>
+                        <div class="panel-body align-content-center">
+                            <div class="row">
+                                <div class="col-md-3">
+
+                                </div>
+                                <div class="col-md-9">
+                                    <a type="buttom" class="btn btn-primary" href="#">Si</a>
+                                    <a type="buttom" class="btn btn-danger" href="#">No</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tablaVentas').DataTable(
+                {
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax":
+                    {
+                        "url": "/Ventas/Json",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+                    "pageLength": 10,
+                    "filter": true,
+                    "responsivePriority": 1,
+                    "data": null,
+                    "columns":
+                        [
+                            { "data": "ID", "name": "ID", "autoWidth": true },
+                            { "data": "Producto", "name": "Producto", "autoWidth": true },
+                            { "data": "Marca", "name": "Marca", "autoWidth": true },
+                            { "data": "Fecha", "name": "Fecha", "autoWidth": true },
+                            { "data": "Cantidad", "name": "Cantidad", "autoWidth": true },
+                            { "data": "PVenta", "name": "PVenta", "autoWidth": true },
+                            { "data": "PEntrada", "name": "PEntrada", "autoWidth": true },
+                            { "data": "Ganancia", "name": "Ganancia", "autoWidth": true },
+                            { "data": "Cliente", "name": "Cliente", "autoWidth": true },
+                        ]
+                });
+        });
+    </script>
+}

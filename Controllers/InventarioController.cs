@@ -25,8 +25,12 @@ namespace La_Moderna_Proyect.Controllers
             return View("Inventario");
         }
         [HttpPost]
-        public ActionResult Test()
-        {          
+        public ActionResult Test(/*string inProdTipoCon, string inProdCon*/)
+        {
+            /*if(inProdTipoCon != "" && inProdCon != "")
+            {
+                return Consultas(inProdTipoCon, inProdCon);
+            }*/
             SqlConnection con;
             SqlDataReader lec;
             SqlCommand comQry;
@@ -110,6 +114,107 @@ namespace La_Moderna_Proyect.Controllers
                 return Content("F" + ex.ToString());
             }
             
+        }
+        [HttpPost]
+        public ActionResult Consultas(string inProdTipoCon, string inProdCon)
+        {
+            SqlConnection con;
+            SqlDataReader lec;
+            SqlCommand comQry;
+            SqlDataAdapter ada;
+
+            var cadConexion = "Data Source=.; Initial Catalog=doncuco;Integrated Security=SSPI;";
+            con = new SqlConnection(cadConexion);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception ex)
+            {
+                return Content("F" + ex.ToString());
+            }
+
+            try
+            {
+                string Id = "";
+                string Prod = "";
+                string Mar = "";
+                string Ent = "";
+                string Ven = "";
+                string SalCad = "";
+                string Exi = "";
+                List<InventarioCon> lst = new List<InventarioCon>();    
+
+                var draw = Request.Form.GetValues("draw").FirstOrDefault();
+                var start = Request.Form.GetValues("start").FirstOrDefault();
+                var length = Request.Form.GetValues("length").FirstOrDefault();
+                var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+                var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+                var searchValue = Request.Form.GetValues("search[value]").FirstOrDefault();
+
+                pageSize = length != null ? Convert.ToInt32(length) : 0;
+                skip = start != null ? Convert.ToInt32(start) : 0;
+                recordsTotal = 0;
+
+                if(inProdTipoCon == "ID")
+                {
+                    comQry = new SqlCommand("sp_producto_id", con);
+                    comQry.CommandType = CommandType.StoredProcedure;
+                    comQry.Parameters.AddWithValue("@id_producto", inProdCon);
+                }
+                else if(inProdTipoCon == "Marca")
+                {
+                    comQry = new SqlCommand("sp_producto_marca", con);
+                    comQry.CommandType = CommandType.StoredProcedure;
+                    comQry.Parameters.AddWithValue("@marca_producto", inProdCon);
+                }
+                else if (inProdTipoCon == "Tipo")
+                {
+                    comQry = new SqlCommand("sp_producto_tipo", con);
+                    comQry.CommandType = CommandType.StoredProcedure;
+                    comQry.Parameters.AddWithValue("@tipo_producto", inProdCon);
+                }
+                else
+                {
+                    return Content("F de fallo bro");
+                }
+                
+                ada = new SqlDataAdapter(comQry);
+                lec = comQry.ExecuteReader();
+
+                while (lec.Read())
+                {
+                    Id = lec["ID"].ToString();
+                    Prod = lec["Producto"].ToString();
+                    Mar = lec["Marca"].ToString();
+                    Ent = lec["Entradas"].ToString();
+                    Ven = lec["Ventas"].ToString();
+                    SalCad = lec["Salida_Caducidad"].ToString();
+                    Exi = lec["Existencias"].ToString();
+                    InventarioCon invCon = new InventarioCon
+                    {
+                        ID = Id,
+                        Producto = Prod,
+                        Marca = Mar,
+                        Entradas = Ent,
+                        Ventas = Ven,
+                        Salida_Caducidad = SalCad,
+                        Existencias = Exi,
+                    };
+                    lst.Add(invCon);
+                }
+                recordsTotal = lst.Count();
+                lst = lst.Skip(skip).Take(pageSize).ToList();
+                lec.Close();
+                con.Close();
+
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = lst });
+            }
+            catch (Exception ex)
+            {
+                return Content("F" + ex.ToString());
+            }
+
         }
     }
 }
