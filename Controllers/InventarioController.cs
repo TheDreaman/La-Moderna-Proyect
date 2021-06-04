@@ -22,7 +22,6 @@ namespace La_Moderna_Proyect.Controllers
         // GET: Inventario
         public ActionResult Inventario()
         {
-
             return View("Inventario");
         }
         [HttpPost]
