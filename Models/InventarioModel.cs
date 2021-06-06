@@ -25,4 +25,10 @@ namespace La_Moderna_Proyect.Models
         public string Existencias { get; set; }
 
     }
+
+    public class Cache
+    {
+        public static string inProdTipoCon { get; set; }
+        public static string inProdCon { get; set; }
+    }
 }

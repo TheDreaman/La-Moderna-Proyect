@@ -1,8 +1,9 @@
-﻿@model La_Moderna_Proyect.Models.InventarioModel
+﻿
 @{
+    ViewBag.Title = "Consultas";
     Layout = "~/Views/Shared/_Layout1.cshtml";
-    ViewBag.Title = "Alo";
 }
+
 <div class="my-5">
     <h3 class="font-weight-bold text-center">INVENTARIO</h3>
 </div>
@@ -11,10 +12,10 @@
 
     </div>
     @*<div class="col-sm-2">
-        <button type="button" class="btn btn-dark btn2 col-12" data-toggle="modal" data-target="#testItem" data-whatever="">
-            <ion-icon name="search-outline"></ion-icon> +Consultas
-        </button>
-    </div>*@
+            <button type="button" class="btn btn-dark btn2 col-12" data-toggle="modal" data-target="#testItem" data-whatever="">
+                <ion-icon name="search-outline"></ion-icon> +Consultas
+            </button>
+        </div>*@
     <div class="col-8">
         <form id="formCon" method="post">
             <div class="form-row">
@@ -47,12 +48,16 @@
 
 
 <div class="container my-2">
-    <table class="table" id="tablaItems">
+    <table class="table" id="tablaItemsCon">
         <thead class="thead-dark table-responsive-md">
             <tr>
                 <th scope="col">ID de Producto</th>
+                <th scope="col">Producto</th>
                 <th scope="col">Marca</th>
-                <th scope="col">Total</th>
+                <th scope="col">Entradas</th>
+                <th scope="col">Ventas</th>
+                <th scope="col">Salida por caducidad</th>
+                <th scope="col">Existencias</th>
             </tr>
         </thead>
         <tbody>
@@ -62,59 +67,59 @@
 
 @*--------------------------------Ventana emergente para Detalles--------------------------------*@
 @*<div class="modal fade" id="testItem" tabindex="-1" aria-labelledby="testItemLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="testItemLabel">Consultas de utilidad</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"></div>
-                        <div class="panel-body">
-                            <form id="formCon" method="post">                                
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">Buscar por:</label>
-                                        <select name="inProdTipoCon" class="form-control">
-                                            <option selected>ID</option>
-                                            <option>Marca</option>
-                                            <option>Tipo</option>
-                                        </select>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testItemLabel">Consultas de utilidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"></div>
+                            <div class="panel-body">
+                                <form id="formCon" method="post">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="inputState">Buscar por:</label>
+                                            <select name="inProdTipoCon" class="form-control">
+                                                <option selected>ID</option>
+                                                <option>Marca</option>
+                                                <option>Tipo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Ingrese el ID/Marca/Tipo a buscar</label>
+                                            <input type="text" class="form-control" name="inProdCon" placeholder="">
+                                        </div>
+                                        <div class="form-group col-md-2 my-2">
+                                            <label></label>
+                                            <button type="submit" class="btn btn-dark col-12">Buscar</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Ingrese el ID/Marca/Tipo a buscar</label>
-                                        <input type="text" class="form-control" name="inProdCon" placeholder="">
-                                    </div>
-                                    <div class="form-group col-md-2 my-2">
-                                        <label></label>
-                                        <button type="submit" class="btn btn-dark col-12">Buscar</button>
-                                    </div>
-                                </div>                                
-                            </form>
-                            <div class="container my-2">
-                                <table class="table" id="tablaItemsCon">
-                                    <thead class="thead-dark table-responsive-md">
-                                        <tr>
-                                            <th scope="col">ID de Producto</th>
-                                            <th scope="col">Marca</th>
-                                            <th scope="col">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                </form>
+                                <div class="container my-2">
+                                    <table class="table" id="tablaItemsCon">
+                                        <thead class="thead-dark table-responsive-md">
+                                            <tr>
+                                                <th scope="col">ID de Producto</th>
+                                                <th scope="col">Marca</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 @*--------------------------------Ventana emergente para Modificar--------------------------------*@
 <div class="modal fade" id="modItem" tabindex="-1" aria-labelledby="modItemLabel" aria-hidden="true">
@@ -188,7 +193,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#tablaItems').DataTable(
+            @*$('#tablaItems').DataTable(
                 {
                     "processing": true,
                     "serverSide": true,
@@ -208,16 +213,19 @@
                             { "data": "Marca", "name": "Marca", "autoWidth": true },
                             { "data": "Total", "name": "Total", "autoWidth": true },
                         ]
-                });
-            @*$('#tablaItemsCon').DataTable(
+                });*@
+            $('#tablaItemsCon').DataTable(
                 {
-                    "processing": true,
+                    "processing": false,
                     "serverSide": true,
                     "ajax":
                     {
                         "url": "/Inventario/Consultas",
                         "type": "POST",
-                        "datatype": "json"
+                        "datatype": "json",
+                        "error": function (xhr, ajaxOptions, thrownError) {
+                            alert("ERROR :( \nCompruebe que los datos ingresados sean correctos");                            
+                        }
                     },
                     "pageLength": 10,
                     "filter": false,
@@ -233,7 +241,8 @@
                             { "data": "Salida_Caducidad", "name": "Producto", "autoWidth": true },
                             { "data": "Existencias", "name": "Producto", "autoWidth": true },
                         ]
-                });*@
+                    
+                });
             $('#formCon').submit(function (e) {
                 e.preventDefault();
                 url = "/Inventario/Test"
@@ -242,8 +251,7 @@
                     if (data == "1") {
                         document.location.href = "/Inventario/VerConsultas";
                     }
-                    else
-                    {
+                    else {
                         alert(data)
                     }
                 })

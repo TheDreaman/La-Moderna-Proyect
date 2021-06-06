@@ -11,6 +11,7 @@ namespace La_Moderna_Proyect.Controllers
 {
     public class InventarioController : Controller
     {
+        
         public string draw = "";
         public string start = "";
         public string lenght = "";
@@ -24,13 +25,19 @@ namespace La_Moderna_Proyect.Controllers
         {
             return View("Inventario");
         }
-        [HttpPost]
-        public ActionResult Test(/*string inProdTipoCon, string inProdCon*/)
+        public ActionResult VerConsultas()
         {
-            /*if(inProdTipoCon != "" && inProdCon != "")
-            {
-                return Consultas(inProdTipoCon, inProdCon);
-            }*/
+            return View("VerConsultas");
+        }
+        [HttpPost]
+        public ActionResult Test(string inProdTipoCon, string inProdCon)
+        {
+            if(inProdCon != null)
+            {                
+                Cache.inProdCon = inProdCon;
+                Cache.inProdTipoCon = inProdTipoCon;
+                return Content("1");
+            }
             SqlConnection con;
             SqlDataReader lec;
             SqlCommand comQry;
@@ -116,8 +123,16 @@ namespace La_Moderna_Proyect.Controllers
             
         }
         [HttpPost]
-        public ActionResult Consultas(string inProdTipoCon, string inProdCon)
+        public ActionResult Consultas(/*string inProdTipoCon, string inProdCon*/)
         {
+            //Cache cache = new Models.Cache();
+            //Models.Cache cache = new Cache();
+            string inTipo = Cache.inProdTipoCon;
+            string inCon = Cache.inProdCon;
+            /*if (inProdCon == "")
+            {
+                return View("Inventario");
+            }*/
             SqlConnection con;
             SqlDataReader lec;
             SqlCommand comQry;
@@ -156,27 +171,27 @@ namespace La_Moderna_Proyect.Controllers
                 skip = start != null ? Convert.ToInt32(start) : 0;
                 recordsTotal = 0;
 
-                if(inProdTipoCon == "ID")
+                if(inTipo == "ID")
                 {
                     comQry = new SqlCommand("sp_producto_id", con);
                     comQry.CommandType = CommandType.StoredProcedure;
-                    comQry.Parameters.AddWithValue("@id_producto", inProdCon);
+                    comQry.Parameters.AddWithValue("@id_producto", inCon);
                 }
-                else if(inProdTipoCon == "Marca")
+                else if(inTipo == "Marca")
                 {
                     comQry = new SqlCommand("sp_producto_marca", con);
                     comQry.CommandType = CommandType.StoredProcedure;
-                    comQry.Parameters.AddWithValue("@marca_producto", inProdCon);
+                    comQry.Parameters.AddWithValue("@marca_producto", inCon);
                 }
-                else if (inProdTipoCon == "Tipo")
+                else if (inTipo == "Tipo")
                 {
                     comQry = new SqlCommand("sp_producto_tipo", con);
                     comQry.CommandType = CommandType.StoredProcedure;
-                    comQry.Parameters.AddWithValue("@tipo_producto", inProdCon);
+                    comQry.Parameters.AddWithValue("@tipo_producto", inCon);
                 }
                 else
                 {
-                    return Content("F de fallo bro");
+                    return View("Inventario");
                 }
                 
                 ada = new SqlDataAdapter(comQry);
@@ -190,6 +205,10 @@ namespace La_Moderna_Proyect.Controllers
                     Ent = lec["Entradas"].ToString();
                     Ven = lec["Ventas"].ToString();
                     SalCad = lec["Salida_Caducidad"].ToString();
+                    if(SalCad==null)
+                    {
+                        SalCad = " ";
+                    }
                     Exi = lec["Existencias"].ToString();
                     InventarioCon invCon = new InventarioCon
                     {
@@ -202,17 +221,24 @@ namespace La_Moderna_Proyect.Controllers
                         Existencias = Exi,
                     };
                     lst.Add(invCon);
-                }
+                }                
                 recordsTotal = lst.Count();
                 lst = lst.Skip(skip).Take(pageSize).ToList();
                 lec.Close();
                 con.Close();
-
-                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = lst });
+                if (lst.Count() != 0)
+                {
+                    return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = lst });
+                }
+                else
+                {
+                    return View("Inventario");
+                }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
-                return Content("F" + ex.ToString());
+                return Content("Inventario");
+                //return Content("F" + ex.ToString());
             }
 
         }
