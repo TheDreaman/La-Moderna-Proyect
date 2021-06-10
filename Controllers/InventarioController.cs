@@ -126,7 +126,7 @@ namespace La_Moderna_Proyect.Controllers
             
         }
         [HttpPost]
-        public ActionResult Consultas(/*string inProdTipoCon, string inProdCon*/)
+        public ActionResult Consultas()
         {
             //Cache cache = new Models.Cache();
             //Models.Cache cache = new Cache();
@@ -361,6 +361,7 @@ namespace La_Moderna_Proyect.Controllers
             SqlCommand comQry;
             SqlDataAdapter ada;
             List<Autofill> lst = new List<Autofill>();
+            List<SrcTipoProd> lst2 = new List<SrcTipoProd>();
 
             var cadConexion = "Data Source=.; Initial Catalog=doncuco;Integrated Security=SSPI;";
             con = new SqlConnection(cadConexion);
@@ -432,15 +433,30 @@ namespace La_Moderna_Proyect.Controllers
                 }
                 else if ((modIdProd == "" || modIdProd == null) && (modIdProveedor != "" && modIdProveedor != null)) //ID producto no existe, ID Proveedor existe
                 {
-                    /*if() //ID producto no existe, ID Proveedor existe, Tipo de producto existe
+                    comQry = new SqlCommand("sp_muestra_tipo_productos", con);
+                    comQry.CommandType = CommandType.StoredProcedure;
+
+                    ada = new SqlDataAdapter(comQry);
+                    lec = comQry.ExecuteReader();
+
+                    while (lec.Read())
                     {
-                        comQry = new SqlCommand("sp_actualiza_entradas_por_id_proveedor", con);
+                        SrcTipoProd autoTipProd = new SrcTipoProd
+                        {
+                            TipoProducto = lec["TipoProducto"].ToString()
+                        };
+                        lst2.Add(autoTipProd);
+                    }
+                    lec.Close();
+                    var src2 = lst2.Where(x => x.TipoProducto.Contains(modTipo)).Select(y => y.TipoProducto).ToList();
+                    if (src2.Count != 0) //ID producto no existe, ID Proveedor existe, Tipo de producto existe
+                    {
+                        comQry = new SqlCommand("sp_actualiza_entradas_por_id_proveedor_nueva_marca", con);
                     }
                     else //ID producto no existe, ID Proveedor existe, Tipo de producto no existe
                     {
                         comQry = new SqlCommand("sp_actualiza_entradas_por_id_proveedor", con);
                     }
-                    
                     comQry.CommandType = CommandType.StoredProcedure;
                     comQry.Parameters.AddWithValue("@tipo_producto", modTipo);
                     comQry.Parameters.AddWithValue("@marca", modMarca);
@@ -449,10 +465,10 @@ namespace La_Moderna_Proyect.Controllers
                     comQry.Parameters.AddWithValue("@precio_entrada", modPrecioIn);
                     comQry.Parameters.AddWithValue("@caducidad_entrada", modCad);
                     ada = new SqlDataAdapter(comQry);
-                lec = comQry.ExecuteReader();
-                lec.Close();
-                con.Close();
-                     */
+                    lec = comQry.ExecuteReader();
+                    lec.Close();
+                    con.Close();
+                     
                 }
                 else if ((modIdProd == "" || modIdProd == null) && (modIdProveedor == "" || modIdProveedor == null))
                 {
@@ -476,9 +492,6 @@ namespace La_Moderna_Proyect.Controllers
                 {
                     return Content("0");
                 }
-                
-                
-
                 return Content("1");
             }
             catch (Exception ex)
@@ -528,6 +541,52 @@ namespace La_Moderna_Proyect.Controllers
                 var fill = lst.Where(x => x.NombreEmpresa.Contains(term)).Select(y => y.NombreEmpresa)/*.Take(5)*/.ToList();
 
                 return Json(fill, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public JsonResult AutofillTipoProd(string modIdProd, string modTipo, string modMarca, string modCantEntry, string modDateIn, string modCad, string modIdProveedor, string modNameEmpresa,
+                                            string modNameProveedor, string modApeProveedor, string modTelProveedor, string modPrecioIn, string term)
+        {
+            SqlConnection con;
+            SqlDataReader lec;
+            SqlCommand comQry;
+            SqlDataAdapter ada;
+
+            var cadConexion = "Data Source=.; Initial Catalog=doncuco;Integrated Security=SSPI;";
+            con = new SqlConnection(cadConexion);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception ex)
+            {
+                return Json(ex, JsonRequestBehavior.AllowGet);
+            }
+
+            try
+            {
+                List<SrcTipoProd> lst2 = new List<SrcTipoProd>();
+
+                comQry = new SqlCommand("sp_muestra_tipo_productos", con);
+                comQry.CommandType = CommandType.StoredProcedure;
+
+                ada = new SqlDataAdapter(comQry);
+                lec = comQry.ExecuteReader();
+
+                while (lec.Read())
+                {
+                    SrcTipoProd autoTipProd = new SrcTipoProd
+                    {
+                        TipoProducto = lec["TipoProducto"].ToString()
+                    };
+                    lst2.Add(autoTipProd);
+                }
+                lec.Close();
+                var src2 = lst2.Where(x => x.TipoProducto.Contains(term)).Select(y => y.TipoProducto).ToList();
+                return Json(src2, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

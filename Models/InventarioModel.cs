@@ -33,6 +33,11 @@ namespace La_Moderna_Proyect.Models
     {
         public string NombreEmpresa { get; set; }
     }
+    public class SrcTipoProd
+    {
+        public string TipoProducto { get; set; }
+    }
+
     public class InventarioCon
     {
         public string ID { get; set; }
