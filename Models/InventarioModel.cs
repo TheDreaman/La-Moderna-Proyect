@@ -29,6 +29,14 @@ namespace La_Moderna_Proyect.Models
         public string TelProveedor { get; set; }
 
     }
+    public class Caducos
+    {
+        public string IdEntrada { get; set; }
+        public string IdProducto { get; set; }
+        public string Caduca { get; set; }
+        public string Cantidad { get; set; }
+
+    }
     public class Autofill
     {
         public string NombreEmpresa { get; set; }

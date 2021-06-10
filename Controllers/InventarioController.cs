@@ -23,7 +23,63 @@ namespace La_Moderna_Proyect.Controllers
         // GET: Inventario
         public ActionResult Inventario()
         {
-            return View("Inventario");
+            SqlConnection con;
+            SqlDataReader lec, lec2;
+            SqlCommand comQry;
+            SqlDataAdapter ada;
+
+            var cadConexion = "Data Source=.; Initial Catalog=doncuco;Integrated Security=SSPI;" + "MultipleActiveResultSets = true;";
+            con = new SqlConnection(cadConexion);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception ex)
+            {
+                return Content("F" + ex.ToString());
+            }
+
+            try
+            {
+                string IdEnt = "";
+                string IdProd = "";
+                string Caduca = "";
+                string Cant = "";
+
+                comQry = new SqlCommand("sp_productos_caducados", con); //------------------------Checa y quita los productos caducos
+                comQry.CommandType = CommandType.StoredProcedure;
+                ada = new SqlDataAdapter(comQry);
+                lec = comQry.ExecuteReader();
+
+                while (lec.Read())
+                {
+                    IdEnt = lec["IdEntrada"].ToString();
+                    IdProd = lec["IdProducto"].ToString();
+                    Caduca = lec["Caduca"].ToString();
+                    Cant = lec["Cantidad"].ToString();
+
+                    if (IdEnt != "" && IdEnt != null)
+                    {
+                        comQry = new SqlCommand("sp_actualiza_caducidad", con);
+                        comQry.CommandType = CommandType.StoredProcedure;
+                        comQry.Parameters.AddWithValue("@id_caducidad", 1);
+                        comQry.Parameters.AddWithValue("@producto_caducidad", IdProd);
+                        comQry.Parameters.AddWithValue("@fecha_caducidad", Convert.ToDateTime(Caduca));
+                        comQry.Parameters.AddWithValue("@cantidad_caducidad", Cant);
+                        comQry.Parameters.AddWithValue("@operacion", 1);
+                        ada = new SqlDataAdapter(comQry);
+                        lec2 = comQry.ExecuteReader();
+                        lec2.Close();
+                    }
+                }
+                lec.Close();
+                con.Close();
+                return View("Inventario");
+            }
+            catch (Exception ex)
+            {
+                return Content("F" + ex.ToString());
+            }
         }
         public ActionResult VerConsultas()
         {
@@ -128,14 +184,8 @@ namespace La_Moderna_Proyect.Controllers
         [HttpPost]
         public ActionResult Consultas()
         {
-            //Cache cache = new Models.Cache();
-            //Models.Cache cache = new Cache();
             string inTipo = Cache.inProdTipoCon;
             string inCon = Cache.inProdCon;
-            /*if (inProdCon == "")
-            {
-                return View("Inventario");
-            }*/
             SqlConnection con;
             SqlDataReader lec;
             SqlCommand comQry;
