@@ -1,8 +1,9 @@
-﻿@model La_Moderna_Proyect.Models.InventarioModel
+﻿@model La_Moderna_Proyect.Models.Cache
 @{
     Layout = "~/Views/Shared/_Layout1.cshtml";
     ViewBag.Title = "Alo";
 }
+@{string date = DateTime.Today.ToString("yyyy-MM-dd"); }
 <div class="my-5">
     <h3 class="font-weight-bold text-center">INVENTARIO</h3>
 </div>
@@ -11,10 +12,10 @@
 
     </div>
     @*<div class="col-sm-2">
-        <button type="button" class="btn btn-dark btn2 col-12" data-toggle="modal" data-target="#testItem" data-whatever="">
-            <ion-icon name="search-outline"></ion-icon> +Consultas
-        </button>
-    </div>*@
+            <button type="button" class="btn btn-dark btn2 col-12" data-toggle="modal" data-target="#testItem" data-whatever="">
+                <ion-icon name="search-outline"></ion-icon> +Consultas
+            </button>
+        </div>*@
     <div class="col-8">
         <form id="formCon" method="post">
             <div class="form-row">
@@ -40,7 +41,7 @@
     <div class="col-sm-2 p-2">
         <label></label>
         <button type="button" class="btn btn-dark btn2 col-12 " data-toggle="modal" data-target="#modItem" data-whatever="">
-            Modificar <ion-icon name="create-outline"></ion-icon>
+            Agregar <ion-icon name="create-outline"></ion-icon>
         </button>
     </div>
 </div>
@@ -51,6 +52,7 @@
         <thead class="thead-dark table-responsive-md">
             <tr>
                 <th scope="col">ID de Producto</th>
+                <th scope="col">Tipo</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Total</th>
             </tr>
@@ -62,66 +64,66 @@
 
 @*--------------------------------Ventana emergente para Detalles--------------------------------*@
 @*<div class="modal fade" id="testItem" tabindex="-1" aria-labelledby="testItemLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="testItemLabel">Consultas de utilidad</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container">
-                    <div class="panel panel-default">
-                        <div class="panel-heading"></div>
-                        <div class="panel-body">
-                            <form id="formCon" method="post">                                
-                                <div class="form-row">
-                                    <div class="form-group col-md-4">
-                                        <label for="inputState">Buscar por:</label>
-                                        <select name="inProdTipoCon" class="form-control">
-                                            <option selected>ID</option>
-                                            <option>Marca</option>
-                                            <option>Tipo</option>
-                                        </select>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="testItemLabel">Consultas de utilidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"></div>
+                            <div class="panel-body">
+                                <form id="formCon" method="post">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label for="inputState">Buscar por:</label>
+                                            <select name="inProdTipoCon" class="form-control">
+                                                <option selected>ID</option>
+                                                <option>Marca</option>
+                                                <option>Tipo</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Ingrese el ID/Marca/Tipo a buscar</label>
+                                            <input type="text" class="form-control" name="inProdCon" placeholder="">
+                                        </div>
+                                        <div class="form-group col-md-2 my-2">
+                                            <label></label>
+                                            <button type="submit" class="btn btn-dark col-12">Buscar</button>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label>Ingrese el ID/Marca/Tipo a buscar</label>
-                                        <input type="text" class="form-control" name="inProdCon" placeholder="">
-                                    </div>
-                                    <div class="form-group col-md-2 my-2">
-                                        <label></label>
-                                        <button type="submit" class="btn btn-dark col-12">Buscar</button>
-                                    </div>
-                                </div>                                
-                            </form>
-                            <div class="container my-2">
-                                <table class="table" id="tablaItemsCon">
-                                    <thead class="thead-dark table-responsive-md">
-                                        <tr>
-                                            <th scope="col">ID de Producto</th>
-                                            <th scope="col">Marca</th>
-                                            <th scope="col">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
+                                </form>
+                                <div class="container my-2">
+                                    <table class="table" id="tablaItemsCon">
+                                        <thead class="thead-dark table-responsive-md">
+                                            <tr>
+                                                <th scope="col">ID de Producto</th>
+                                                <th scope="col">Marca</th>
+                                                <th scope="col">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
-@*--------------------------------Ventana emergente para Modificar--------------------------------*@
+@*--------------------------------Ventana emergente para Agregar--------------------------------*@
 <div class="modal fade" id="modItem" tabindex="-1" aria-labelledby="modItemLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modItemLabel">Consultas de utilidad</h5>
+                <h5 class="modal-title" id="modItemLabel">Agregar entradas</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -131,51 +133,72 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"></div>
                         <div class="panel-body">
-                            <form>
+                            <form id="formMod">
                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
-                                        <input type="email" class="form-control" id="inputEmail4">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="inputPassword4">Password</label>
-                                        <input type="password" class="form-control" id="inputPassword4">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress">Address</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Address 2</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label for="inputCity">City</label>
-                                        <input type="text" class="form-control" id="inputCity">
+                                    <div class="form-group col-md-4">
+                                        <label>ID de Producto</label>
+                                        <input type="text" class="form-control" name="modIdProd" id="modIdIdProd" value="">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="inputState">State</label>
-                                        <select id="inputState" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
-                                        </select>
+                                        <label>Tipo</label>
+                                        <input type="text" class="form-control" name="modTipo" id="modIdTipo" value="">
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label for="inputZip">Zip</label>
-                                        <input type="text" class="form-control" id="inputZip">
+                                    <div class="form-group col-md-4">
+                                        <label>Marca</label>
+                                        <input type="text" class="form-control" name="modMarca" id="modIdMarca" value="">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                                        <label class="form-check-label" for="gridCheck">
-                                            Check me out
-                                        </label>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>Cantidad de Entrada</label>
+                                        <input type="text" class="form-control" name="modCantEntry" value="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Fecha de entrada</label>
+                                        <input type="text" class="form-control" name="modDateIn" value="@date" disabled>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Caducidad</label>
+                                        @*<input type="text" class="form-control" name="modCad" value="">*@
+                                        <span class="input-group-text bg-light shadow-sm" id="basico">
+                                            <ion-icon name="calendar-clear-outline" class="pr-2"></ion-icon>
+                                            <input type="text" readonly="" class="form-control bg-secondary" id="dateIn" placeholder="Ingrese una Fecha" name="modCad">
+                                        </span>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Sign in</button>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>ID de Proveedor</label>
+                                        <input type="text" class="form-control" name="modIdProveedor" id="modIdIdProv" value="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Nombre de Empresa</label>
+                                        <input type="text" class="form-control" name="modNameEmpresa" id="modIdNameEmp" value="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Nombre de Proveedor</label>
+                                        <input type="text" class="form-control" name="modNameProveedor" id="modIdNameProv" value="">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label>Apellido de Proveedor</label>
+                                        <input type="text" class="form-control" name="modApeProveedor" id="modIdApeProv" value="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Telefono de Proveedor</label>
+                                        <input type="text" class="form-control" name="modTelProveedor" id="modIdTelProv" value="">
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label>Precio de entrada</label>
+                                        <input type="text" class="form-control" name="modPrecioIn" value="">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <button type="submit" class="btn btn-dark col-2" name="modBtnMod">Agregar</button>
+                                    <div class="col-1"></div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -185,7 +208,7 @@
     </div>
 </div>
 
-@section scripts{
+@section scripts{    
     <script>
         $(document).ready(function () {
             $('#tablaItems').DataTable(
@@ -205,35 +228,20 @@
                     "columns":
                         [
                             { "data": "Producto", "name": "Producto", "autoWidth": true },
+                            { "data": "Tipo", "name": "Tipo", "autoWidth": true },
                             { "data": "Marca", "name": "Marca", "autoWidth": true },
                             { "data": "Total", "name": "Total", "autoWidth": true },
                         ]
                 });
-            @*$('#tablaItemsCon').DataTable(
-                {
-                    "processing": true,
-                    "serverSide": true,
-                    "ajax":
-                    {
-                        "url": "/Inventario/Consultas",
-                        "type": "POST",
-                        "datatype": "json"
-                    },
-                    "pageLength": 10,
-                    "filter": false,
-                    "responsivePriority": 1,
-                    "data": null,
-                    "columns":
-                        [
-                            { "data": "ID", "name": "Producto", "autoWidth": true },
-                            { "data": "Producto", "name": "Producto", "autoWidth": true },
-                            { "data": "Marca", "name": "Marca", "autoWidth": true },
-                            { "data": "Entradas", "name": "Total", "autoWidth": true },
-                            { "data": "Ventas", "name": "Producto", "autoWidth": true },
-                            { "data": "Salida_Caducidad", "name": "Producto", "autoWidth": true },
-                            { "data": "Existencias", "name": "Producto", "autoWidth": true },
-                        ]
-                });*@
+            $('#dateIn').datepicker({
+                language: "es",
+                todayBtn: "linked",
+                clearBtn: true,
+                format: "yyyy-mm-dd",
+                multidate: false,
+                todayHighlight: true
+
+            });
             $('#formCon').submit(function (e) {
                 e.preventDefault();
                 url = "/Inventario/Test"
@@ -242,9 +250,219 @@
                     if (data == "1") {
                         document.location.href = "/Inventario/VerConsultas";
                     }
-                    else
-                    {
+                    else {
                         alert(data)
+                    }
+                })
+            });
+            $('#formMod').submit(function (e) {
+                e.preventDefault();
+                url = "/Inventario/InsertaEntrada"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data == "1") {
+                        document.location.href = "/Inventario/Inventario";
+                    }
+                    else {
+                        document.location.href = "/Inventario/Inventario";
+                        alert(data)
+                    }
+                })
+            });
+            $("#modIdIdProd").keyup(function () {
+                url = "/Inventario/VerificaEntrada"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                        $("#modIdTipo").val(data.Tipo);
+                        $("#modIdMarca").val(data.Marca);
+                        $("#modIdTipo").prop("disabled", true);
+                        $("#modIdMarca").prop("disabled", true);
+                    }
+                    else if (data == "1") {
+                    }
+                    else {
+                        $("#modIdTipo").val("");
+                        $("#modIdMarca").val("");
+                        $("#modIdTipo").prop("disabled", false);
+                        $("#modIdMarca").prop("disabled", false);
+                    }
+                })
+            });
+            $("#modIdTipo").keyup(function () {
+                url = "/Inventario/VerificaEntrada"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                        $("#modIdTipo").val(data.Tipo);
+                        $("#modIdMarca").val(data.Marca);
+                        $("#modIdTipo").prop("disabled", true);
+                        $("#modIdMarca").prop("disabled", true);
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProd").val("");
+                        $("#modIdIdProd").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdTipo").val("");
+                        $("#modIdMarca").val("");
+                        $("#modIdIdProd").val("");
+                        $("#modIdIdProd").prop("disabled", false);
+                        $("#modIdTipo").prop("disabled", false);
+                        $("#modIdMarca").prop("disabled", false);
+                    }
+                })
+            });
+            $("#modIdMarca").keyup(function () {
+                url = "/Inventario/VerificaEntrada"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                        $("#modIdTipo").val(data.Tipo);
+                        $("#modIdMarca").val(data.Marca);
+                        $("#modIdTipo").prop("disabled", true);
+                        $("#modIdMarca").prop("disabled", true);
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProd").val("");
+                        $("#modIdIdProd").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdTipo").val("");
+                        $("#modIdMarca").val("");
+                        $("#modIdIdProd").val("");
+                        $("#modIdIdProd").prop("disabled", false);
+                        $("#modIdTipo").prop("disabled", false);
+                        $("#modIdMarca").prop("disabled", false);
+                    }
+                })
+            });
+            $("#modIdIdProv").keyup(function () {
+                url = "/Inventario/VerificaEntrada2"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                        $("#modIdNameEmp").val(data.NameEmpresa);
+                        $("#modIdNameProv").val(data.NameProveedor);
+                        $("#modIdApeProv").val(data.ApeProveedor);
+                        $("#modIdTelProv").val(data.TelProveedor);
+                        $("#modIdNameEmp").prop("disabled", true);
+                        $("#modIdNameProv").prop("disabled", true);
+                        $("#modIdApeProv").prop("disabled", true);
+                        $("#modIdTelProv").prop("disabled", true);
+                    }
+                    else if (data == "1") {
+                    }
+                    else {
+                        $("#modIdNameEmp").val("");
+                        $("#modIdNameProv").val("");
+                        $("#modIdApeProv").val("");
+                        $("#modIdTelProv").val("");
+                        $("#modIdNameEmp").prop("disabled", false);
+                        $("#modIdNameProv").prop("disabled", false);
+                        $("#modIdApeProv").prop("disabled", false);
+                        $("#modIdTelProv").prop("disabled", false);
+                    }
+                })
+            });
+            var fill = "/Inventario/AutofillNameEmp";
+            $("#modIdNameEmp").autocomplete({
+                source: "/Inventario/AutofillNameEmp",                
+            });
+            $("#modIdNameEmp").keyup(function () {
+                url = "/Inventario/VerificaEntrada2"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdNameEmp").val("");
+                        $("#modIdNameProv").val("");
+                        $("#modIdApeProv").val("");
+                        $("#modIdTelProv").val("");
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", false);
+                        $("#modIdNameEmp").prop("disabled", false);
+                        $("#modIdNameProv").prop("disabled", false);
+                        $("#modIdApeProv").prop("disabled", false);
+                        $("#modIdTelProv").prop("disabled", false);
+                    }
+                })
+            });
+
+            $("#modIdNameProv").keyup(function () {
+                url = "/Inventario/VerificaEntrada2"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdNameEmp").val("");
+                        $("#modIdNameProv").val("");
+                        $("#modIdApeProv").val("");
+                        $("#modIdTelProv").val("");
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", false);
+                        $("#modIdNameEmp").prop("disabled", false);
+                        $("#modIdNameProv").prop("disabled", false);
+                        $("#modIdApeProv").prop("disabled", false);
+                        $("#modIdTelProv").prop("disabled", false);
+                    }
+                })
+            });
+            $("#modIdApeProv").keyup(function () {
+                url = "/Inventario/VerificaEntrada2"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdNameEmp").val("");
+                        $("#modIdNameProv").val("");
+                        $("#modIdApeProv").val("");
+                        $("#modIdTelProv").val("");
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", false);
+                        $("#modIdNameEmp").prop("disabled", false);
+                        $("#modIdNameProv").prop("disabled", false);
+                        $("#modIdApeProv").prop("disabled", false);
+                        $("#modIdTelProv").prop("disabled", false);
+                    }
+                })
+            });
+            $("#modIdTelProv").keyup(function () {
+                url = "/Inventario/VerificaEntrada2"
+                parametros = $(this).serialize();
+                $.post(url, parametros, function (data) {
+                    if (data != "0" && data != "1") {
+                    }
+                    else if (data == "1") {
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", true);
+                    }
+                    else {
+                        $("#modIdNameEmp").val("");
+                        $("#modIdNameProv").val("");
+                        $("#modIdApeProv").val("");
+                        $("#modIdTelProv").val("");
+                        $("#modIdIdProv").val("");
+                        $("#modIdIdProv").prop("disabled", false);
+                        $("#modIdNameEmp").prop("disabled", false);
+                        $("#modIdNameProv").prop("disabled", false);
+                        $("#modIdApeProv").prop("disabled", false);
+                        $("#modIdTelProv").prop("disabled", false);
                     }
                 })
             })

@@ -10,9 +10,28 @@ namespace La_Moderna_Proyect.Models
     public class InventarioModel
     {
         public string Producto { get; set; }
+        public string Tipo { get; set; }
         public string Marca { get; set; }
         public string Total { get; set; }
 
+    }
+    public class Rellena
+    {        
+        public string Tipo { get; set; }
+        public string Marca { get; set; }
+
+    }
+    public class Rellena2
+    {
+        public string NameEmpresa { get; set; }
+        public string NameProveedor { get; set; }
+        public string ApeProveedor { get; set; }
+        public string TelProveedor { get; set; }
+
+    }
+    public class Autofill
+    {
+        public string NombreEmpresa { get; set; }
     }
     public class InventarioCon
     {
@@ -30,5 +49,18 @@ namespace La_Moderna_Proyect.Models
     {
         public static string inProdTipoCon { get; set; }
         public static string inProdCon { get; set; }
+        public static string modIdProd { get; set; }
+        public static string modTipo { get; set; }
+        public string modTipo2 { get; set; } 
+        public static string modMarca { get; set; }
+        public static string modCantEntry { get; set; }
+        public static string modDateIn { get; set; }
+        public static string modCad { get; set; }
+        public static string modIdProveedor { get; set; }
+        public static string modNameEmpresa { get; set; }
+        public static string modNameProveedor { get; set; }
+        public static string modApeProveedor { get; set; }
+        public static string modTelProveedor { get; set; }
+        public static string modPrecioIn { get; set; }
     }
 }

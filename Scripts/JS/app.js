@@ -8,7 +8,7 @@ $(document).ready(function() {
         multidate: false,
         todayHighlight: true
 
-    });
+    });    
 
     $('#checkout').datepicker({
         language: "es",
