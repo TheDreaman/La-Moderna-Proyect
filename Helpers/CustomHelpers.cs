@@ -57,11 +57,19 @@ namespace La_Moderna_Proyect.Helpers
 
                 lec.Close();
                 con.Close();
-                return new MvcHtmlString(htmlfinal);
+                if (htmlfinal != null && htmlfinal != "")
+                {
+                    return new MvcHtmlString(htmlfinal);
+                }
+                else
+                {
+                    return new MvcHtmlString("");
+                }
+                
             }
             catch (Exception ex)
             {
-                return new MvcHtmlString(html + ex);
+                return new MvcHtmlString(html);
             }
         }
         public static MvcHtmlString Alertas2(this HtmlHelper Helper)
@@ -108,11 +116,18 @@ namespace La_Moderna_Proyect.Helpers
 
                 lec.Close();
                 con.Close();
-                return new MvcHtmlString(htmlfinal);
+                if (htmlfinal != null && htmlfinal != "")
+                {
+                    return new MvcHtmlString(htmlfinal);
+                }
+                else
+                {
+                    return new MvcHtmlString("");
+                }
             }
             catch (Exception ex)
             {
-                return new MvcHtmlString(html + ex);
+                return new MvcHtmlString(html);
             }
         }
         public static MvcHtmlString Alertas3(this HtmlHelper Helper)

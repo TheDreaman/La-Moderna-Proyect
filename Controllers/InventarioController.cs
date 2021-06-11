@@ -257,6 +257,10 @@ namespace La_Moderna_Proyect.Controllers
                     Mar = lec["Marca"].ToString();
                     Ent = lec["Entradas"].ToString();
                     Ven = lec["Ventas"].ToString();
+                    if (Ven == null)
+                    {
+                        Ven = " ";
+                    }
                     SalCad = lec["Salida_Caducidad"].ToString();
                     if(SalCad==null)
                     {
