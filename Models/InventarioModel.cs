@@ -75,5 +75,8 @@ namespace La_Moderna_Proyect.Models
         public static string modApeProveedor { get; set; }
         public static string modTelProveedor { get; set; }
         public static string modPrecioIn { get; set; }
+        public static int alerta1 { get; set; }
+        public static int alerta2 { get; set; }
+
     }
 }

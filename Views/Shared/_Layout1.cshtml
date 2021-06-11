@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using La_Moderna_Proyect.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <title>@Page.Title</title>
@@ -50,7 +51,7 @@
             <div class="row">
                 <div class="col-10 text-center"></div>
                 <button type="button" class="btn btn2" data-toggle="modal" data-target="#modifyWord">
-                    <span class="badge badge-danger">4</span>
+                    <span class="badge badge-danger">@Html.Alertas3()</span>
                     <ion-icon class="" name="notifications-outline" size="small"></ion-icon>
                 </button>
             </div>
@@ -61,23 +62,13 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modifyWordLabel">Editar Palabra</h5>
+                        <h5 class="modal-title" id="modifyWordLabel">Alertas</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Pocas unidades!</strong> El producto X solo cuenta con 5 unidades.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Por Caducar!</strong> El producto Y está a menos de una semana de caducar.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+                        @Html.Alertas1()
+                        @Html.Alertas2()
                     </div>
                 </div>
             </div>
