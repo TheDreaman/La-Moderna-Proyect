@@ -262,6 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
@@ -284,6 +285,7 @@
     <Content Include="Views\Reporte\Reporte.cshtml" />
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Inventario\VerConsultas.cshtml" />
+    <Content Include="Views\Clientes\Clientes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
